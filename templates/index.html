@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% set title = "WebCoinPay-RSA Generator" %}
+{% set active_page = "/" %}
+{% block content %}
+  <div class="container">
+      <div class="row">
+          <div class="col-12">
+              <div class="card mt-5">
+                  <div class="card-body">
+                      <div class="form-group">
+                          <label for="publicKey">Public key</label>
+                          <textarea name="publicKey" id="publicKey" cols="30" rows="5" class="form-control"></textarea>
+                      </div>
+                      <div class="form-group">
+                          <label for="privateKey">Private key</label>
+                          <textarea name="privateKey" id="privateKey" cols="30" rows="5" class="form-control"></textarea>
+                      </div>
+                      <div class="form-group mt-5">
+                          <button id="generate" onclick="generate()" class="btn btn-success">Сгенерировать</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+
+      function generate(){
+          fetch('http://localhost:8080/generate')
+      .then((response) => response.text())
+      .then((text) => {
+       document.getElementById('privateKey').value = text
+      });
+
+      fetch('http://localhost:8080/getPublic')
+          .then((response) => response.text())
+      .then((text) => {
+      document.getElementById('publicKey').value = text
+      });
+      }
+
+  </script>
+{% endblock %}

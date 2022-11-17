@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% set title = "WebCoinPay-RSA encode" %}
+{% set active_page = "encode" %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="pubKey">Public Key</label>
+                        <textarea name="pubKey" id="pubKey" cols="30" rows="5" class="form-control">{{ pubKey }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="encodedMessage">Encoded Message</label>
+                        <textarea name="encodedMessage" id="encodedMessage" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-success mt-5" onclick="encodeMessage()">Encode</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function encodeMessage()
+    {
+        console.log(document.getElementById('message').value)
+        fetch('http://localhost:8080/encode-message?' + new URLSearchParams({
+            message: document.getElementById('message').value
+        }))
+        .then((response) => response.text())
+            .then((text) => {
+           document.getElementById('encodedMessage').value = text
+          });
+    }
+</script>
+{% endblock %}
